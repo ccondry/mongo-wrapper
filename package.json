@@ -1,0 +1,18 @@
+{
+  "name": "@ccondry/mongo-wrapper",
+  "version": "1.0.0",
+  "description": "A simple wrapper for mongodb. Handles connection pooling for you.",
+  "main": "src/index.js",
+  "repository": "https://github.com/ccondry/mongo-wrapper.git",
+  "author": "Coty Condry <ccondry@cisco.com>",
+  "license": "MIT",
+  "scripts": {
+    "test": "mocha test --timeout 10000"
+  },
+  "dependencies": {
+    "mongodb": "^3.5.7"
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0"
+  }
+}
