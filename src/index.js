@@ -192,6 +192,29 @@ class DB {
       })
     })
   }
+  
+  // mongo replace record
+  replaceOne (db, collection, query, data) {
+    return new Promise((resolve, reject) => {
+      // get mongo client
+      this.getConnection(db)
+      .then(client => {
+        // upsert!
+        client.db(db)
+        .collection(collection)
+        .findOneAndReplace(query, data, function (err, result) {
+          // check for error
+          if (err) reject(err)
+          // success
+          else resolve(result)
+        })
+      })
+      .catch(e => {
+        // failed to get client
+        reject(e)
+      })
+    })
+  }
 }
 
 module.exports = DB
