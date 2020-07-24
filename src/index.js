@@ -196,6 +196,10 @@ class DB {
   }
   
   removeOne (db, collection, query) {
+    return this.deleteOne(db, collection, query)
+  }
+
+  deleteOne (db, collection, query) {
     return new Promise((resolve, reject) => {
       // get mongo client
       this.getConnection(db)
@@ -203,7 +207,7 @@ class DB {
         // go
         client.db(db)
         .collection(collection)
-        .removeOne(query, function (err, result) {
+        .deleteOne(query, function (err, result) {
           // check for error
           if (err) reject(err)
           // success
@@ -215,6 +219,32 @@ class DB {
         reject(e)
       })
     })
+  }
+  
+  deleteMany (db, collection, query) {
+    return new Promise((resolve, reject) => {
+      // get mongo client
+      this.getConnection(db)
+      .then(client => {
+        // go
+        client.db(db)
+        .collection(collection)
+        .deleteMany(query, function (err, result) {
+          // check for error
+          if (err) reject(err)
+          // success
+          else resolve(result)
+        })
+      })
+      .catch(e => {
+        // failed to get client
+        reject(e)
+      })
+    })
+  }
+
+  removeMany (db, collection, query) {
+    return this.deleteMany(db, collection, query)
   }
   
   // mongo replace record
