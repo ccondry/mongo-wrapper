@@ -171,6 +171,30 @@ class DB {
     })
   }
   
+  
+  // mongo updateMany (update one or more existing records)
+  updateMany (db, collection, filter, updates) {
+    return new Promise((resolve, reject) => {
+      // get mongo client
+      this.getConnection(db)
+      .then(client => {
+        // update one
+        client.db(db)
+        .collection(collection)
+        .updateMany(filter, updates, function (err, result) {
+          // check for error
+          if (err) reject(err)
+          // success
+          else resolve(result)
+        })
+      })
+      .catch(e => {
+        // failed to get client
+        reject(e)
+      })
+    })
+  }
+  
   removeOne (db, collection, query) {
     return new Promise((resolve, reject) => {
       // get mongo client
