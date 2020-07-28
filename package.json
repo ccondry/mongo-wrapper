@@ -1,6 +1,6 @@
 {
   "name": "@ccondry/mongo-wrapper",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "A simple wrapper for mongodb. Handles connection pooling for you.",
   "main": "src/index.js",
   "repository": "https://github.com/ccondry/mongo-wrapper.git",
