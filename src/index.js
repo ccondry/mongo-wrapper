@@ -269,6 +269,57 @@ class DB {
       })
     })
   }
+  
+  // <filter>,
+  //  <update document or aggregation pipeline>, // Changed in MongoDB 4.2
+  //  {
+  //    projection: <document>,
+  //    sort: <document>,
+  //    maxTimeMS: <number>,
+  //    upsert: <boolean>,
+  //    returnNewDocument: <boolean>,
+  //    collation: <document>,
+  //    arrayFilters: [ <filterdocument1>, ... ]
+  //  }
+
+  // find one and replace
+  findOneAndUpdate (db, collection, filter, data) {
+    return new Promise((resolve, reject) => {
+      // get mongo client
+      this.getConnection(db)
+      .then(client => {
+        // upsert!
+        client.db(db)
+        .collection(collection)
+        .findOneAndReplace(filter, data, function (err, result) {
+          // check for error
+          if (err) reject(err)
+          // success
+          else resolve(result)
+        })
+      })
+      .catch(e => {
+        // failed to get client
+        reject(e)
+      })
+    })
+  }
+
+  // get a collection object so client can call any method
+  collection (db, collection) {
+    return new Promise((resolve, reject) => {
+      // get mongo client
+      this.getConnection(db)
+      .then(client => {
+        // return the connected collection object
+        resolve(client.db(db).collection(collection))
+      })
+      .catch(e => {
+        // failed to get client
+        reject(e)
+      })
+    })
+  }
 }
 
 module.exports = DB
