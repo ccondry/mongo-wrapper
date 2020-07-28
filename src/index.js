@@ -58,13 +58,13 @@ class DB {
     })
   }
   
-  find (db, collection, query = {}, projection) {
+  find (db, collection, query = {}, projection, sort) {
     return new Promise((resolve, reject) => {
       // get mongo client
       this.getConnection(db)
       .then(client => {
         client.db(db).collection(collection)
-        .find(query).project(projection)
+        .find(query).project(projection).sort(sort)
         .toArray(function (queryError, doc) {
           // check for error
           if (queryError) reject(queryError)
