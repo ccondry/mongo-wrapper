@@ -305,6 +305,32 @@ class DB {
     })
   }
 
+  /* db.collection.bulkWrite() method
+   * Bulk write operations affect a single collection
+   * Each write operation is passed to bulkWrite() as a document in an array.
+   * Bulk write operations can be either ordered or unordered.
+   */
+  bulkWrite (db, collection, operationsArray, isOrdered){
+    return new Promise((resolve, reject) => {
+      // get mongo client
+      this.getConnection(db)
+      .then(client => {
+        client.db(db)
+        .collection(collection)
+        .bulkWrite(operationsArray, { ordered : isOrdered }, function (err, result) {
+          // check for error
+          if (err) reject(err)
+          // success
+          else resolve(result)
+        })
+      })
+      .catch(e => {
+        // failed to get client
+        reject(e)
+      })
+    }) 
+  }
+
   // get a collection object so client can call any method
   collection (db, collection) {
     return new Promise((resolve, reject) => {
