@@ -102,7 +102,7 @@ class DB {
     })
   }
   
-  // mongo insert
+  // mongo insert one
   insertOne (db, collection, data) {
     return new Promise((resolve, reject) => {
       // get mongo client
@@ -112,6 +112,29 @@ class DB {
         client.db(db)
         .collection(collection)
         .insertOne(data, function (err, result) {
+          // check for error
+          if (err) reject(err)
+          // success
+          else resolve(result)
+        })
+      })
+      .catch(e => {
+        // failed to get client
+        reject(e)
+      })
+    })
+  }
+  
+  // mongo insert many
+  insertMany (db, collection, data) {
+    return new Promise((resolve, reject) => {
+      // get mongo client
+      this.getConnection(db)
+      .then(client => {
+        // insert!
+        client.db(db)
+        .collection(collection)
+        .insertMany(data, function (err, result) {
           // check for error
           if (err) reject(err)
           // success
