@@ -31,7 +31,7 @@ describe('db.getConnection()', function () {
 describe('db.find()', function () {
   it('should return array of results from mongo db', async function () {
     const projection = {password: 0}
-    const r = await db.find('toolbox', 'users', {id: '0325'}, projection)
+    const r = await db.find('toolbox', 'users', {}, projection, {}, 2)
     console.log(r)
   })
 })

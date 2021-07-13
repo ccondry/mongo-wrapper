@@ -58,13 +58,20 @@ class DB {
     })
   }
   
-  find (db, collection, query = {}, projection, sort) {
+  find (db, collection, query = {}, projection, sort, limit) {
     return new Promise((resolve, reject) => {
       // get mongo client
       this.getConnection(db)
       .then(client => {
-        client.db(db).collection(collection)
-        .find(query).project(projection).sort(sort)
+        let f = client.db(db)
+        .collection(collection)
+        .find(query)
+        // limit if the limit was set
+        if (Number.isInteger(limit) && limit >= 0) {
+          f = f.limit(limit)
+        }
+        f.project(projection)
+        .sort(sort)
         .toArray(function (queryError, doc) {
           // check for error
           if (queryError) reject(queryError)
