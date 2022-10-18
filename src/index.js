@@ -313,7 +313,7 @@ class DB {
   //  }
 
   // find one and replace
-  findOneAndUpdate (db, collection, filter, data) {
+  findOneAndUpdate (db, collection, filter, updates) {
     return new Promise((resolve, reject) => {
       // get mongo client
       this.getConnection(db)
@@ -321,7 +321,7 @@ class DB {
         // upsert!
         client.db(db)
         .collection(collection)
-        .findOneAndReplace(filter, data, function (err, result) {
+        .findOneAndUpdate(filter, updates, function (err, result) {
           // check for error
           if (err) reject(err)
           // success
