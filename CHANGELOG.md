@@ -4,6 +4,13 @@ Versions are semver-compatible dates in YYYY.MM.DD-X format, where X is the
 revision number
 
 
+# 2022.10.18
+
+### Fixes
+* **FindOneAndUpdate:** Fixed the findOneAndUpdate method actually using
+findOneAndReplace internally.
+
+
 # 2021.7.13
 
 ### Features
