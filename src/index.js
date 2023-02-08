@@ -376,6 +376,55 @@ class DB {
       })
     })
   }
+
+  // run aggregate query
+  aggregate (db, collection, query = {}, limit) {
+    return new Promise((resolve, reject) => {
+      // get mongo client
+      this.getConnection(db)
+      .then(client => {
+        let f = client.db(db)
+        .collection(collection)
+        .aggregate(query)
+        // limit if the limit was set
+        if (Number.isInteger(limit) && limit >= 0) {
+          f = f.limit(limit)
+        }
+        f.toArray(function (queryError, doc) {
+          // check for error
+          if (queryError) reject(queryError)
+          // success
+          else resolve(doc)
+        })
+      })
+      .catch(e => {
+        // failed to get client
+        reject(e)
+      })
+    })
+  }
+
+  count (db, collection, query) {
+    return new Promise((resolve, reject) => {
+      // get mongo client
+      this.getConnection(db)
+      .then(client => {
+        // upsert!
+        client.db(db)
+        .collection(collection)
+        .count(query, function (err, result) {
+          // check for error
+          if (err) reject(err)
+          // success
+          else resolve(result)
+        })
+      })
+      .catch(e => {
+        // failed to get client
+        reject(e)
+      })
+    })
+  }
 }
 
 module.exports = DB
