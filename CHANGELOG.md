@@ -4,6 +4,13 @@ Versions are semver-compatible dates in YYYY.MM.DD-X format, where X is the
 revision number
 
 
+# 2023.2.8
+
+### Features
+* **Aggregate:** Add aggregate method.
+* **Count:** Add count method.
+
+
 # 2022.10.18
 
 ### Fixes
